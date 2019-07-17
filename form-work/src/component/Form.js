@@ -1,10 +1,11 @@
 import React from 'react'
+import uuidv4 from "uuid/v4"
 
 
 
-function Form({inputForm, setInputForm, setPlayers, players}) {
+function Form({inputForm, setInputForm, setPlayers, players, isEddit, setIsEddit, edditPlayers}) {
 
-    const {name, email, role} = inputForm
+    const {name, email, role, id} = inputForm
 
     const handles = e => {
         setInputForm({
@@ -14,9 +15,16 @@ function Form({inputForm, setInputForm, setPlayers, players}) {
     }
 
 
+    const addPlayer= player => {
+        setPlayers([...players, {id: uuidv4(), ...player}])
+        setInputForm({name:'', email:'', role:''})
+    }
+
+
     const onSubmit = (e, player) => {
         e.preventDefault()
-        setPlayers([...players, player])
+        isEddit ? edditPlayers(id, name, email, role, players) : addPlayer(player)
+        setInputForm({name:"", email:"", role:""})
     }
 
     return(
@@ -28,24 +36,27 @@ function Form({inputForm, setInputForm, setPlayers, players}) {
                 name='name'
                 placeholder='name'
                 value={name}
-                onChange={handles} />
+                onChange={handles} 
+                />
 
                 <input
                 type='text'
                 name='email'
                 placeholder='email'
                 value={email}
-                onChange={handles} />
+                onChange={handles} 
+                />
 
                 <input
                 type='text'
                 name='role'
                 placeholder='role'
                 value={role}
-                onChange={handles} />
+                onChange={handles} 
+                />
 
 
-                <button >submit</button>
+                <button type='submit'>{isEddit ? 'Eddit' : 'Submit'}</button>
 
             </form>
         </div>
