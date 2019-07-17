@@ -2,27 +2,50 @@ import React from 'react'
 
 
 
-function Form() {
+function Form({inputForm, setInputForm, setPlayers, players}) {
 
+    const {name, email, role} = inputForm
+
+    const handles = e => {
+        setInputForm({
+            ...inputForm, 
+            [e.target.name]: e.target.value
+        })
+    }
+
+
+    const onSubmit = (e, player) => {
+        e.preventDefault()
+        setPlayers([...players, player])
+    }
 
     return(
         <div>
-            <form>
+            <form onSubmit={(e) => onSubmit(e, inputForm)}>
 
                 <input
                 type='text'
                 name='name'
-                placeholder='name' />
+                placeholder='name'
+                value={name}
+                onChange={handles} />
 
                 <input
                 type='text'
                 name='email'
-                placeholder='email' />
+                placeholder='email'
+                value={email}
+                onChange={handles} />
 
                 <input
                 type='text'
-                name='name'
-                placeholder='name' />
+                name='role'
+                placeholder='role'
+                value={role}
+                onChange={handles} />
+
+
+                <button >submit</button>
 
             </form>
         </div>

@@ -1,19 +1,12 @@
 import React, { useState } from "react";
-import Form from './components/Form'
-
-
-import './App.css';
-
-
-
-
+import Form from './component/Form'
+import Player from './component/Player'
 
 
 
 function App() {
 
-
-  const [players, setPlayers] = useState({
+  const [players, setPlayers] = useState([{
     name: 'Diddo',
     email: '5 Feet',
     role: '210lbs'
@@ -27,11 +20,15 @@ function App() {
     name: 'Jareld',
     email: '6.5 Feet',
     role: '280lbs'
-  }
+  }]
   )
   
 
-
+const [inputForm, setInputForm] = useState({
+  name:'',
+  email:'',
+  role:''
+})
 
 
 
@@ -41,10 +38,17 @@ function App() {
 
 
     <div className="App">
+      
+      <Form inputForm={inputForm} 
+      setInputForm={setInputForm} 
+      setPlayers={setPlayers}
+      players={players}/>
 
-      <h1>hello</h1>
-
-      <Form {...setPlayers} />
+      {players.map((item, key) => (
+        <div>
+          <Player {...item} key={key} />
+        </div>
+      ))}
 
     </div>
 
